@@ -40,7 +40,7 @@ import com.gabbytt.soundex.encoders.*;
  */
 
 public class SoundExExpression {
-	public static final int NOT_MATCHED=-1;
+	protected static final int NOT_MATCHED=-1;
 	//public static final int MATCHED=0;
 	Locale _locale;
 	ISxEncoder sxEncoder;
@@ -274,6 +274,12 @@ public class SoundExExpression {
 		public compareMethod compMethod; 
 		public UF_IgnoredMatching uf_IgnoredMatching;
 		public SoundExExpression.DelineateFormatter formatter;
+		public SxRuntimeSettings() {
+			this.MINIMUM_SIMULARITY =MINIMUM_SIMULARITY.GROUP_SAME;
+			this.compMethod = compMethod.EXISTENCE;
+			this.uf_IgnoredMatching = uf_IgnoredMatching.MATCH;
+			formatter = new DelineateFormatter("(",")","[","]") ;
+		}
 		public SxRuntimeSettings(SxSIMULARITY MINIMUM_SIMULARITY,compareMethod compMethod,UF_IgnoredMatching i, SoundExExpression.DelineateFormatter f){
 				this.MINIMUM_SIMULARITY =MINIMUM_SIMULARITY;
 				this.compMethod = compMethod;
@@ -307,38 +313,8 @@ public class SoundExExpression {
 	
 	
 	}
-//	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY ) {
-//		/**
-//		 * Alia/overload for method  of same name.
-//		 */
-//		return x_DelineateDifferences(other, formatting, MINIMUM_SIMULARITY, compareMethod.EXISTENCE);
-//	}
-//	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY, compareMethod compMethod ) {
-//		/**
-//		 * Usage: 
-//		 * 
-//		 * 		SoundExExpression.DelineateFormatter dFormater = new SoundExExpression.DelineateFormatter("","","(",")");
-//		 *		System.out.println("Extra Sounds:" + sxAttemptWord.DelineateDifferences(sxGoalWord, dFormater, SxSIMULARITY.SOUNDEX_EQUAL));
-//		 * 		
-//		 * Purpose:
-//		 * 		Create a string the delineat the difference between this and other. Specifically, sxSoundByte elements
-//		 * 		that are in this and not in other.
-//		 */
-//		String diffString = "";
-//		int[] diffIndices = comapareSoundEx(other, MINIMUM_SIMULARITY,compMethod);
-//		for(int i=0; i<diffIndices.length;i++) {
-//			SxSoundByte Abyte = getSoundByteAt(i);
-//			if(diffIndices[i] > SoundExExpression.NOT_MATCHED || Abyte.isIgnored()){
-//				diffString += formatting.frontMatched + Abyte.getWordPart() + formatting.rearMatched;
-//			}else {//if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
-//				diffString += formatting.frontNotMatched + Abyte.getWordPart() + formatting.rearNotMatched;
-//
-//			}
-//		}
-//
-//		
-//		return diffString;
-//	}
+
+	
 	public ArrayList<SxSoundByte> extractDifferenceBytes(SoundExExpression other, SxSIMULARITY MINIMUM_SIMULARITY) {
 		/**
 		 * Alia/overload for method  of same name.
@@ -369,28 +345,6 @@ public class SoundExExpression {
 		}
 		return diffBytes ;
 	}
-	
-//	public String x_DelineateDifferencesDebug(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY) {
-//		String diffString = getOriginalWord() + " -> " + getSoundExCode() +" , "+ other.getOriginalWord() + " -> " + other.getSoundExCode();
-//		int[] diffIndices = compareExistence(other, MINIMUM_SIMULARITY);
-//		for(int i=0; i<diffIndices.length;i++) {
-//			SxSoundByte Abyte = getSoundByteAt(i);
-//			diffString  += Abyte.getWordPart() + "(" + Abyte.getSoundExCode() + ")";
-//			if(Abyte.isIgnored()) {
-//				diffString += " isIGNORE ";
-//			}else if(diffIndices[i] == SoundExExpression.NOT_MATCHED){
-//				diffString += " NO MATCH ";
-//			}else if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
-//				SxSoundByte Bbyte = other.getSoundByteAt(diffIndices[i]);	
-//				diffString += " MATCHED: " + Bbyte.getWordPart() + "(" + Bbyte.getSoundExCode() + ") ["+ i + ":" + diffIndices[i]+"]";
-//
-//			}
-//			diffString+= "\n\t";
-//		}
-//
-//		
-//		return diffString;
-//	}
 	
 	
 
