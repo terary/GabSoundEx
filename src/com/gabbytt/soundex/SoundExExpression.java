@@ -33,6 +33,9 @@ import com.gabbytt.soundex.encoders.*;
  *  		soundEx comparison  - then it's considered non-match (not similar).
  * 
  * @author terary
+ * 
+ * 
+ * UF_*  <--- user friendly.  related to output
  *
  */
 
@@ -111,9 +114,9 @@ public class SoundExExpression {
 			int[] diffs = this.comapareSoundEx( sxAttempt , cpx.MINIMUM_SIMULARITY,cpx.compMethod);
 			
 			//int countAttemptBytes = sxAttempt.getCountSoundBytes();
-			int countAttemptBytes = sxAttempt.getCountSoundBytesNotIgnored();// .getCountSoundBytes();
+			int countAttemptBytes = sxAttempt.getSoundBytesCountNotIgnored();// .getCountSoundBytes();
 			int countSameBytes = countMatches(diffs);
-			int countGoalBytes = this.getCountSoundBytesNotIgnored();
+			int countGoalBytes = this.getSoundBytesCountNotIgnored();
 			int countTotalConsideredBytes = countAttemptBytes + countGoalBytes - countSameBytes ;
 			Float score = (float) countSameBytes /countTotalConsideredBytes ;
 			if(score  >= minimumSimilarity) {
@@ -137,7 +140,7 @@ public class SoundExExpression {
 		}
 		return bestWord;
 	}
-	public static int countMatches(int[] diffs) {
+	protected static int countMatches(int[] diffs) {
 		int matches =0;
 		for(int i=0; i<diffs.length; i++) {
 			if(diffs[i] > SoundExExpression.NOT_MATCHED) {
@@ -166,28 +169,28 @@ public class SoundExExpression {
 	public String getSoundExCode() {
 		return _sxCode;
 	}
-	public String x_getSoundExCodeSlice(int start, int end) {
-		if(start>=(end+1)) {return"";}
-		String soundExCode = getSoundExCode();
-		String sliceCode = "";
-		
-		String[] codes = soundExCode.split("(?=[A-Z])");
-		
-		for(int i=start;i<end+1;i++) {
-			sliceCode += codes[i]; 
-		}
-		
-		return sliceCode ;
-		
-	}
+//	public String x_getSoundExCodeSlice(int start, int end) {
+//		if(start>=(end+1)) {return"";}
+//		String soundExCode = getSoundExCode();
+//		String sliceCode = "";
+//		
+//		String[] codes = soundExCode.split("(?=[A-Z])");
+//		
+//		for(int i=start;i<end+1;i++) {
+//			sliceCode += codes[i]; 
+//		}
+//		
+//		return sliceCode ;
+//		
+//	}
 	
 	public SxSoundByte getSoundByteAt(int i) {
 		return _soundBytes.get(i);
 	}
-	public int getCountSoundBytes() {
+	public int getSoundByteCount() {
 		return _soundBytes.size();
 	}
-	public int getCountSoundBytesNotIgnored() {
+	public int getSoundBytesCountNotIgnored() {
 		return _countSoundBytesNotIgnored;
 	}
 	public String[] makeWordsFrom(String sentence){
@@ -304,38 +307,38 @@ public class SoundExExpression {
 	
 	
 	}
-	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY ) {
-		/**
-		 * Alia/overload for method  of same name.
-		 */
-		return x_DelineateDifferences(other, formatting, MINIMUM_SIMULARITY, compareMethod.EXISTENCE);
-	}
-	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY, compareMethod compMethod ) {
-		/**
-		 * Usage: 
-		 * 
-		 * 		SoundExExpression.DelineateFormatter dFormater = new SoundExExpression.DelineateFormatter("","","(",")");
-		 *		System.out.println("Extra Sounds:" + sxAttemptWord.DelineateDifferences(sxGoalWord, dFormater, SxSIMULARITY.SOUNDEX_EQUAL));
-		 * 		
-		 * Purpose:
-		 * 		Create a string the delineat the difference between this and other. Specifically, sxSoundByte elements
-		 * 		that are in this and not in other.
-		 */
-		String diffString = "";
-		int[] diffIndices = comapareSoundEx(other, MINIMUM_SIMULARITY,compMethod);
-		for(int i=0; i<diffIndices.length;i++) {
-			SxSoundByte Abyte = getSoundByteAt(i);
-			if(diffIndices[i] > SoundExExpression.NOT_MATCHED || Abyte.isIgnored()){
-				diffString += formatting.frontMatched + Abyte.getWordPart() + formatting.rearMatched;
-			}else {//if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
-				diffString += formatting.frontNotMatched + Abyte.getWordPart() + formatting.rearNotMatched;
-
-			}
-		}
-
-		
-		return diffString;
-	}
+//	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY ) {
+//		/**
+//		 * Alia/overload for method  of same name.
+//		 */
+//		return x_DelineateDifferences(other, formatting, MINIMUM_SIMULARITY, compareMethod.EXISTENCE);
+//	}
+//	public String x_DelineateDifferences(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY, compareMethod compMethod ) {
+//		/**
+//		 * Usage: 
+//		 * 
+//		 * 		SoundExExpression.DelineateFormatter dFormater = new SoundExExpression.DelineateFormatter("","","(",")");
+//		 *		System.out.println("Extra Sounds:" + sxAttemptWord.DelineateDifferences(sxGoalWord, dFormater, SxSIMULARITY.SOUNDEX_EQUAL));
+//		 * 		
+//		 * Purpose:
+//		 * 		Create a string the delineat the difference between this and other. Specifically, sxSoundByte elements
+//		 * 		that are in this and not in other.
+//		 */
+//		String diffString = "";
+//		int[] diffIndices = comapareSoundEx(other, MINIMUM_SIMULARITY,compMethod);
+//		for(int i=0; i<diffIndices.length;i++) {
+//			SxSoundByte Abyte = getSoundByteAt(i);
+//			if(diffIndices[i] > SoundExExpression.NOT_MATCHED || Abyte.isIgnored()){
+//				diffString += formatting.frontMatched + Abyte.getWordPart() + formatting.rearMatched;
+//			}else {//if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
+//				diffString += formatting.frontNotMatched + Abyte.getWordPart() + formatting.rearNotMatched;
+//
+//			}
+//		}
+//
+//		
+//		return diffString;
+//	}
 	public ArrayList<SxSoundByte> extractDifferenceBytes(SoundExExpression other, SxSIMULARITY MINIMUM_SIMULARITY) {
 		/**
 		 * Alia/overload for method  of same name.
@@ -367,27 +370,27 @@ public class SoundExExpression {
 		return diffBytes ;
 	}
 	
-	public String x_DelineateDifferencesDebug(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY) {
-		String diffString = getOriginalWord() + " -> " + getSoundExCode() +" , "+ other.getOriginalWord() + " -> " + other.getSoundExCode();
-		int[] diffIndices = compareExistence(other, MINIMUM_SIMULARITY);
-		for(int i=0; i<diffIndices.length;i++) {
-			SxSoundByte Abyte = getSoundByteAt(i);
-			diffString  += Abyte.getWordPart() + "(" + Abyte.getSoundExCode() + ")";
-			if(Abyte.isIgnored()) {
-				diffString += " isIGNORE ";
-			}else if(diffIndices[i] == SoundExExpression.NOT_MATCHED){
-				diffString += " NO MATCH ";
-			}else if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
-				SxSoundByte Bbyte = other.getSoundByteAt(diffIndices[i]);	
-				diffString += " MATCHED: " + Bbyte.getWordPart() + "(" + Bbyte.getSoundExCode() + ") ["+ i + ":" + diffIndices[i]+"]";
-
-			}
-			diffString+= "\n\t";
-		}
-
-		
-		return diffString;
-	}
+//	public String x_DelineateDifferencesDebug(SoundExExpression other, DelineateFormatter formatting,SxSIMULARITY MINIMUM_SIMULARITY) {
+//		String diffString = getOriginalWord() + " -> " + getSoundExCode() +" , "+ other.getOriginalWord() + " -> " + other.getSoundExCode();
+//		int[] diffIndices = compareExistence(other, MINIMUM_SIMULARITY);
+//		for(int i=0; i<diffIndices.length;i++) {
+//			SxSoundByte Abyte = getSoundByteAt(i);
+//			diffString  += Abyte.getWordPart() + "(" + Abyte.getSoundExCode() + ")";
+//			if(Abyte.isIgnored()) {
+//				diffString += " isIGNORE ";
+//			}else if(diffIndices[i] == SoundExExpression.NOT_MATCHED){
+//				diffString += " NO MATCH ";
+//			}else if(diffIndices[i] > SoundExExpression.NOT_MATCHED){
+//				SxSoundByte Bbyte = other.getSoundByteAt(diffIndices[i]);	
+//				diffString += " MATCHED: " + Bbyte.getWordPart() + "(" + Bbyte.getSoundExCode() + ") ["+ i + ":" + diffIndices[i]+"]";
+//
+//			}
+//			diffString+= "\n\t";
+//		}
+//
+//		
+//		return diffString;
+//	}
 	
 	
 
@@ -504,7 +507,7 @@ public class SoundExExpression {
 		 */
 		if(startPosition<0) {return -1;}
 		
-		for(int i =startPosition; i<haystack.getCountSoundBytes();i++) {
+		for(int i =startPosition; i<haystack.getSoundByteCount();i++) {
 			SxSoundByte straw = haystack.getSoundByteAt(i);
 			if(!straw.isIgnored() && SxSoundByte.compareSoundByte2(needle,straw,MINIMUM_SIMULARITY))  {
 				return i;
