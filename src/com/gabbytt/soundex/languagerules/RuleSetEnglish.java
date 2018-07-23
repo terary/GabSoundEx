@@ -26,6 +26,7 @@ public enum RuleSetEnglish implements IRule, ILanguageRuleSet{
 	 * 
 	 * 				abs(number1-numbers2) has no relevance
 	 * 
+	 *				*** Opps Ph -- now F2 
 	 * 				SoundExCode: H2 -> ph: mega[ph]one, because SoundEx codes: 
 	 * 					H1,H2,H3  are for TH,PH,SH respectively 
 	 * 
@@ -86,7 +87,8 @@ public enum RuleSetEnglish implements IRule, ILanguageRuleSet{
 			
 		/* sh,th,ph  xH */	
 		TH("H1","TH","(th)",EnglishRulePrecedences.xH, "wea[th]er" ),
-		PH("H2","PH","ph",EnglishRulePrecedences.xH, "[ph]oto"),
+		//PH("H2","PH","ph",EnglishRulePrecedences.xH, "[ph]oto"),
+		PH("F2","PH","ph",EnglishRulePrecedences.xH, "[ph]oto"),
 		SH("H3","SH","sh",EnglishRulePrecedences.xH, "[sh]out"),
 
 		/* sch: schwenk, schedule, preschool, schema */

@@ -9,95 +9,66 @@ import com.gabbytt.soundex.SoundExExpression.compareMethod;
 public class Main {
 
 	static SoundExExpression.DelineateFormatter outputFormat = new SoundExExpression.DelineateFormatter("(", ")", "[", "]");		
+	static SoundExExpression sxControl = new SoundExExpression(new Locale("en-us"));
+	static SoundExExpression sxTest = new SoundExExpression(new Locale("en-us"));
+	static SxRuntimeSettings SXSettings = new SxRuntimeSettings();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		boolean ignoreMatching = true;
-		example2();
+//		example2();
+		example1();
 		
 	}
 
 	
 	static void example2(){
-		SxRuntimeSettings SXSettings = new SxRuntimeSettings();
 		SXSettings.MINIMUM_SIMULARITY = SxSIMULARITY.SOUNDEX_EQUAL;
+		SXSettings.uf_IgnoredMatching =SoundExExpression.UF_IgnoredMatching.IGNORE;
 		
-		String ctrlWord = "rewrite";
-		String testWord = "reward";
+		String ctrlWord = "Photography";
+		String testWord = "Phonograph";
 
 		
 		
-		SoundExExpression sxControl = new SoundExExpression(new Locale("en-us"));
 		sxControl.compile(ctrlWord);
-		
-		SoundExExpression sxTest = new SoundExExpression(new Locale("en-us"));
 		sxTest.compile(testWord);
 		
-		int[] test2ctrl= sxControl.compareExistence(sxTest, SxSIMULARITY.GROUP_SAME);
-		System.out.println("test2ctrl: '" +sxControl.getOriginalWord()+"' -> '" +sxControl.getSoundExCode()+ "' :" + sxControl.UF_formatDifferneces(SXSettings, test2ctrl));
+		int[] test2ctrl= sxControl.compareStrict(sxTest, SXSettings.MINIMUM_SIMULARITY);
+		printResult("test2ctrl:",sxControl,test2ctrl);
 		
-		int[] ctrl2test= sxTest.compareExistence(sxControl, SxSIMULARITY.GROUP_SAME);
-		System.out.println("ctrl2test '"+sxTest.getOriginalWord()+"' -> '" +sxTest.getSoundExCode()+"' :" + sxTest.UF_formatDifferneces(SXSettings, ctrl2test ));
-
-		
+		int[] ctrl2test= sxTest.compareStrict(sxControl, SXSettings.MINIMUM_SIMULARITY );
+		printResult("ctrl2test:",sxTest,ctrl2test);
 		
 		System.out.println(outputFormat.formatMatched("Matched") + " " + outputFormat.formatNotMatched("Not Matched"));
-		/**
-		 * Output:
-		 * test2ctrl: 'rewrite' -> 'R1R0D0' :(re)w(r)i(t)e
-		 * ctrl2test 'reward' -> 'R1W0R0D0' :(re)[w]a(r)(d)
-		 * (Matched) [Not Matched]
-		 * 
-		 * 
-		 * Explained:
-		 * re[w]ard -> w is silent in write
-		 * rewri(t)e <-> rewar(d)  
-		 * (re)ward <-> (re)write
-		 * rewa(r)d <-> rew(r)ite
-		 */
-		
-		
 		
 	}
+
+	static void printResult(String label, SoundExExpression sx, int[] compareResults) {
+
+		System.out.println( label + " '"+sx.getOriginalWord()+"' -> '" +sx.getSoundExCode()+"' :" + sx.UF_formatDifferneces(SXSettings, compareResults));
+
+	}
+	
 	static void example1(){
-		SxRuntimeSettings SXSettings = new SxRuntimeSettings();
+		SXSettings.MINIMUM_SIMULARITY = SxSIMULARITY.SOUNDEX_EQUAL;
+		SXSettings.uf_IgnoredMatching =SoundExExpression.UF_IgnoredMatching.IGNORE;
 		
-		String ctrlWord = "rewrite";
-		String testWord = "reward";
+		String ctrlWord = "record";
+		String testWord = "prerecorded";
 
 		
 		
-		SoundExExpression sxControl = new SoundExExpression(new Locale("en-us"));
 		sxControl.compile(ctrlWord);
-		
-		SoundExExpression sxTest = new SoundExExpression(new Locale("en-us"));
 		sxTest.compile(testWord);
 		
-		int[] test2ctrl= sxControl.compareExistence(sxTest, SxSIMULARITY.GROUP_SAME);
-		System.out.println("test2ctrl: '" +sxControl.getOriginalWord()+"' -> '" +sxControl.getSoundExCode()+ "' :" + sxControl.UF_formatDifferneces(SXSettings, test2ctrl));
+		int[] test2ctrl= sxControl.compareStrict(sxTest, SXSettings.MINIMUM_SIMULARITY);
+		printResult("test2ctrl:",sxControl,test2ctrl);
 		
-		int[] ctrl2test= sxTest.compareExistence(sxControl, SxSIMULARITY.GROUP_SAME);
-		System.out.println("ctrl2test '"+sxTest.getOriginalWord()+"' -> '" +sxTest.getSoundExCode()+"' :" + sxTest.UF_formatDifferneces(SXSettings, ctrl2test ));
-
-		
+		int[] ctrl2test= sxTest.compareStrict(sxControl, SXSettings.MINIMUM_SIMULARITY );
+		printResult("ctrl2test:",sxTest,ctrl2test);
 		
 		System.out.println(outputFormat.formatMatched("Matched") + " " + outputFormat.formatNotMatched("Not Matched"));
-		/**
-		 * Output:
-		 * test2ctrl: 'rewrite' -> 'R1R0D0' :(re)w(r)i(t)e
-		 * ctrl2test 'reward' -> 'R1W0R0D0' :(re)[w]a(r)(d)
-		 * (Matched) [Not Matched]
-		 * 
-		 * 
-		 * Explained:
-		 * re[w]ard -> w is silent in write
-		 * rewri(t)e <-> rewar(d)  
-		 * (re)ward <-> (re)write
-		 * rewa(r)d <-> rew(r)ite
-		 */
-		
-		
-		
 	}
 	
 	
