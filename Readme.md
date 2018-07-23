@@ -2,20 +2,23 @@
 Speach-To-Text as a teaching utilitity
 
 Teacher: "Can you say 'photography'?"
+
 Student: "Phonography"
+
 Teacher: "Very good student.  You have all the sounds but you need to work on your 'T' sound a little more.
 
 ### Purpose:
 
-To help language students determine the quality their pronounciation.  Identify strengths and weakness, which sounds require more focus.
+To help language students determine the quality of their pronounciation.  Identify strengths and weakness, which sounds require more attention.
 
 ### Method:
-Speach to Text output compared to some 'goal' text.  
+Speach-to-Text output compared to some 'goal' text.  
 
 ### Supposition:
 A word is an ordered collection (list) of sounds.
 
 ### Concern:
+Sounds collection A and B:
 A &#8745; B
 A - B
 B - A
