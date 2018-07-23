@@ -72,8 +72,9 @@ Example:
 		printResult("ctrl2test:", sxTest,  ctrl2test);
 
 Output:
-(ph)o[t]o(g)(r)a(ph)y
-(ph)o[n]o(g)(r)a(ph)
+
+	(ph)o[t]o(g)(r)a(ph)y
+	(ph)o[n]o(g)(r)a(ph)
 
 Hence, the words 'photography' and 'phonograph' differ in sound only by 'pho{t}ography' and 'pho{n}ograph'
 
@@ -98,7 +99,9 @@ Example:
 		int[] ctrl2test= sxTest.compareStrict(sxControl, SXSettings.MINIMUM_SIMULARITY );
 		printResult("ctrl2test:",sxTest,ctrl2test);
 
-(re)(c)o(r)(d)
-\[pre](re)(c)o(r)(d)e[d]
+Output:
+
+	(re)(c)o(r)(d)
+	[pre](re)(c)o(r)(d)e[d]
 
 Hence the student is missing the 'Pre...' and the '.. ed' sounds.
