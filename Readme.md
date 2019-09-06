@@ -1,5 +1,5 @@
 ### Use case:
-Speach-To-Text as a teaching utilitity
+Speech-To-Text as a teaching utilitity
 
 Teacher: "Can you say 'photography'?"
 
@@ -9,20 +9,20 @@ Teacher: "Very good student.  You have all the sounds but you need to work on yo
 
 ### Purpose:
 
-To help language students determine the quality of their pronounciation.  Identify strengths and weakness, which sounds require more attention.
+To help language students determine the quality of their pronounciation.  Identify strengths and weakness and which sounds require more attention.
 
 ### Method:
-Speach-to-Text output compared to some 'goal' text.  
+Speech-to-Text output compared to some 'goal' text.  
 
 ### Supposition:
-A word is an ordered collection (list) of sounds.
+A word is an ordered collection of sounds.
 
 ### Concern:
 Sounds collection A and B:
 A &#8745; B
 A - B
 B - A
-Set notation used only to describe the concern. This code deals with *lists* of sounds.
+Set notation used only to describe the concern. This code deals with *lists* of sounds and making distinction between goal text and spoken sounds.
 
 
 
